@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import axios from "axios";
+import moment from "moment";
 
 class Store {
 
@@ -21,28 +22,37 @@ class Store {
 
   allPhotos = []
 
-  currentPhoto = []
-
   constructor() {
     makeAutoObservable(this)
   }
 
-  async fetchPhotos() {
-    try {
-      const res = await axios.get('https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?', {
-        params: {
-          earth_date: this.selectedDate,
-          camera: this.selectedCamera,
-          api_key: 'fHl6IibqR0J2lrjSfMKzUrVIDf960immKaNseAIV'
-        }
-      })
-    } catch (error) {
-      this.setError(error)
-    }
+  fetchPhotos = () => {
+    const API_URL: string = 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?'
+
+    axios.get(API_URL, {
+      params: {
+        earth_date: this.selectedDate,
+        camera: this.selectedCamera,
+        api_key: 'fHl6IibqR0J2lrjSfMKzUrVIDf960immKaNseAIV'
+      }
+    })
+    .then(response => this.allPhotos = response.data.photos)
+    .then(console.log(this.allPhotos))
+    .catch(error => this.setError(error))
   }
 
   setError = (error: any) => {
-    this.error = error
+    this.error = error.response
+  }
+
+  setSelectedDate = (date: string) => {
+    this.selectedDate = moment(date).format('YYYY-MM-DD')
+    console.log(this.selectedDate)
+  }
+
+  setSelectedCamera = (camera: string) => {
+    this.selectedCamera = camera
+    console.log(this.selectedCamera)
   }
 
 }
