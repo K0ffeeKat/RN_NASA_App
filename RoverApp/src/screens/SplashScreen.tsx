@@ -1,7 +1,6 @@
-import { StyleSheet, View, ImageBackground, Image } from 'react-native'
-import React, { FC } from 'react'
-import splashImage from '../assets/images/splash_image.png'
-import splashText from '../assets/images/splash_text.png' 
+import { StyleSheet, View, ImageBackground } from 'react-native'
+import React from 'react'
+import splashImage from '../assets/images/splash.png'
 
 export const SplashScreen = () => {
   return (
@@ -10,25 +9,20 @@ export const SplashScreen = () => {
         source={splashImage}
         resizeMode='cover'
         style={styles.backgroundImage}
-        >
-      <Image 
-        source={splashText}
-        style={styles.headline}
         />
-      </ImageBackground>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   mainContainer: {
-    flex: 1
+    flex: 1,
+    justifyContent: 'flex-start'
   },
   backgroundImage: {
-    flex: 1
+    flex: 1,
+    position: 'absolute',
+    width: '100%',
+    aspectRatio: 1 / 2.1
   },
-  headline: {
-    marginTop: 42,
-    marginLeft: 18
-  }
 })

@@ -1,19 +1,19 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native'
-import React, { PropsWithChildren } from 'react'
+import React, { type PropsWithChildren } from 'react'
 
 interface Props {
-  buttonName: string,
+  buttonName: string
   onButtonPress: () => void
 }
 
-export const CustomButton = ({ buttonName, onButtonPress }: PropsWithChildren<Props>) => {
+export const CustomButton = ({ buttonName, onButtonPress }: PropsWithChildren<Props>): JSX.Element => {
   return (
     <View>
       <Pressable
         onPress={onButtonPress}
         style={styles.button}
       >
-        <Text style={styles.buttonText}>EXPLORE</Text>
+        <Text style={styles.buttonText}>{buttonName}</Text>
       </Pressable>
     </View>
   )

@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { AppStack } from './src/stacks/AppStack'
 
-const App: FC = () => {
+const App = (): JSX.Element => {
   return (
     <SafeAreaProvider>
       <AppStack />

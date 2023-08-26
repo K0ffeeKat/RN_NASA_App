@@ -1,16 +1,24 @@
 import { StyleSheet, Text, View, ImageBackground } from 'react-native'
-import React from 'react'
+import React, { type PropsWithChildren } from 'react'
 import { DropdownMenu } from '../components/DropdownMenu'
 import { MainStore } from '../stores/mainStore'
 import { Calendar } from '../components/Calendar'
 import { observer } from 'mobx-react'
 import { CustomButton } from '../components/CustomButton'
 import backgroundRover from '../assets/images/background.png'
+import { Dimensions } from 'react-native'
+import type { DateScreenNavigationProps } from '../../types/types'
 
-export const DateScreen = observer(() => {
+const HEIGHT = Dimensions.get('screen').height
+
+type NavigationProps = DateScreenNavigationProps
+
+export const DateScreen = observer(({ navigation }: PropsWithChildren<NavigationProps>) => {
+
   const {
     fetchPhotos,
     listOfCameras,
+    selectedCamera,
     setSelectedCamera,
     selectedDate,
     setSelectedDate
@@ -26,37 +34,36 @@ export const DateScreen = observer(() => {
 
   const handlePhotoFetch = () => {
     fetchPhotos()
+    navigation.navigate('Gallery')
   }
 
   return (
     <View style={styles.mainContainer}>
-      <ImageBackground
-        source={backgroundRover}
-        resizeMode='cover'
-        style={styles.backgroundImage}
-        />
-      <View style={styles.headlineContainer}>
-        <Text style={styles.headline}>Select Camera and Date</Text>
-      </View>
-      <View style={styles.selectionContainer}>
-        <View>
-          <DropdownMenu
-            listOfCameras={listOfCameras}
-            onCameraSelection={handleCameraSelection}
-            styleLabelText={styles.labelText}
+      <View style={styles.imageContainer}>
+        <ImageBackground
+          source={backgroundRover}
+          style={styles.backgroundImage}
           />
-        </View>
-        <View>
-          <Calendar
-            selectedDate={selectedDate}
-            onDateSelection={handleDateSelection}
-            styleLabelText={styles.labelText}
-          />
-        </View>
-        <CustomButton
-          buttonName='EXPLORE'
-          onButtonPress={handlePhotoFetch}
-        />
+          <View style={styles.headlineContainer}>
+            <Text style={styles.headline}>Select Camera and Date</Text>
+          </View>
+          <View style={styles.selectionContainer}>
+            <DropdownMenu
+              selectedCamera={selectedCamera}
+              listOfCameras={listOfCameras}
+              onCameraSelection={handleCameraSelection}
+              styleLabelText={styles.labelText}
+            />
+            <Calendar
+              selectedDate={selectedDate}
+              onDateSelection={handleDateSelection}
+              styleLabelText={styles.labelText}
+            />
+            <CustomButton
+              buttonName='Explore'
+              onButtonPress={handlePhotoFetch}
+            />
+          </View>
       </View>
     </View>
   )
@@ -65,27 +72,29 @@ export const DateScreen = observer(() => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    alignItems: 'center',
   },
   headlineContainer: {
-    paddingTop: 42,
-    marginBottom: 110
+    marginTop: 42,
+    alignItems: 'center'
   },
   headline: {
     fontFamily: 'Dosis-SemiBold',
     fontSize: 18,
     color: 'black'
   },
-  backgroundImage: {
+  imageContainer: {
     flex: 1,
+    justifyContent: 'flex-end',
+  },
+  backgroundImage: {
     width: '100%',
-    position: 'absolute',
-    top: -150,
-    bottom: 0
+    aspectRatio: 1/2.1,
+    position: 'absolute'
   },
   selectionContainer: {
     flex: 1,
-    alignItems: 'center',
+    marginTop: HEIGHT/7,
+    alignItems: 'center'
   },
   labelText: {
     fontFamily: 'Dosis-Regular',

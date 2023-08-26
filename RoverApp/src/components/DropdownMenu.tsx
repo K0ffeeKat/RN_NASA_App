@@ -1,24 +1,24 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
-import React, { useState, PropsWithChildren } from 'react'
+import React, { useState, type PropsWithChildren } from 'react'
 import { Dropdown } from 'react-native-element-dropdown'
 import dropdownIcon from '../assets/images/dropdownIcon.png'
 
 interface Props {
-  listOfCameras: {
-    label: string,
+  listOfCameras: Array<{
+    label: string
     value: string
-  }[],
+  }>
   styleLabelText: {
-    fontFamily: string,
-    fontSize: number,
-    color: string,
+    fontFamily: string
+    fontSize: number
+    color: string
     marginBottom: number
-  },
+  }
   onCameraSelection: (cameraValue: string) => void
+  selectedCamera: string
 }
 
-export const DropdownMenu = ({ listOfCameras, onCameraSelection, styleLabelText } : PropsWithChildren<Props>) => {
-  const [value, setValue] = useState<string | null>(null)
+export const DropdownMenu = ({ listOfCameras, onCameraSelection, styleLabelText, selectedCamera }: PropsWithChildren<Props>): JSX.Element => {
   const [isFocused, setIsFocused] = useState(false)
 
   const handleCameraChange = (cameraValue: string) => {
@@ -47,7 +47,7 @@ export const DropdownMenu = ({ listOfCameras, onCameraSelection, styleLabelText 
         labelField="label"
         valueField="value"
         placeholder={!isFocused ? 'Select a camera' : '...'}
-        value={value}
+        value={selectedCamera}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         onChange={item => onCameraSelection(item.value)}

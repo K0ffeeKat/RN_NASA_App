@@ -1,9 +1,8 @@
-import { makeAutoObservable } from "mobx";
-import axios from "axios";
-import moment from "moment";
+import { makeAutoObservable } from 'mobx'
+import axios from 'axios'
+import moment from 'moment'
 
 class Store {
-
   selectedCamera = ''
 
   selectedDate = ''
@@ -46,7 +45,11 @@ class Store {
   }
 
   setSelectedDate = (date: string) => {
-    this.selectedDate = moment(date).format('YYYY-MM-DD')
+    if (date) {
+      this.selectedDate = moment(date).format('YYYY-MM-DD')
+    } else {
+      this.selectedDate = ''
+    }
     console.log(this.selectedDate)
   }
 

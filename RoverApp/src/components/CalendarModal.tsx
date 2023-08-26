@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, Pressable, Modal } from 'react-native'
-import React, { PropsWithChildren } from 'react'
+import React, { type PropsWithChildren } from 'react'
 import CalendarPicker from 'react-native-calendar-picker'
 import { observer } from 'mobx-react'
 
 interface Props {
-  isVisible: boolean,
+  isVisible: boolean
   onCalendarPress: () => void
   onDateSelection: (date: string) => void
 }
